@@ -21,3 +21,10 @@ vectorizer = TfidfVectorizer()
 # converts text to numbes for performing classification
 X_train_vector = vectorizer.fit_transform(X_train)
 X_test_vector = vectorizer.transform(X_test)
+
+# uses the C-Support Vector Machine algorithm with linear kernel
+classifier = SVC(kernel='linear')
+classifier.fit(X_train_vector, y_train)
+
+# get the predicted classes
+y_predict = classifier.predict(X_test_vector)
