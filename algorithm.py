@@ -28,3 +28,8 @@ classifier.fit(X_train_vector, y_train)
 
 # get the predicted classes
 y_predict = classifier.predict(X_test_vector)
+
+# evaluate model performance
+accuracy = accuracy_score(y_test, y_predict)
+precision = precision_score(y_test, y_predict, average='weighted')
+recall = recall_score(y_test, y_predict, average='weighted')
