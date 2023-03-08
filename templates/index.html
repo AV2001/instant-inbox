@@ -11,6 +11,12 @@
             rel="stylesheet"
         />
 
+        <!-- CSS STYLESHEETS -->
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='./css/general.css') }}"
+        />
+
         <link
             rel="stylesheet"
             href="{{ url_for('static', filename='./css/style.css') }}"
@@ -18,5 +24,28 @@
 
         <title>InstantInbox &mdash; Home</title>
     </head>
-    <body></body>
+    <body>
+        <!-- HEADER -->
+        <header class="main-header">
+            <a href="#">
+                <img
+                    src="{{ url_for('static', filename='./images/logo.png') }}"
+                    alt="InstantInbox logo"
+                    class="logo"
+                />
+            </a>
+            <nav class="main-nav">
+                <ul class="main-nav-list">
+                    <li><a href="#" class="main-nav-link">Home</a></li>
+                    <li><a href="#" class="main-nav-link">About</a></li>
+                    <li><a href="#" class="main-nav-link">Log in</a></li>
+                    <li>
+                        <a href="#" class="main-nav-link nav-cta"
+                            >Create Account</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    </body>
 </html>
