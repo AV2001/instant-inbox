@@ -7,7 +7,7 @@
 
         <!-- GOOGLE FONTS (FONT FAMILY = INTER) -->
         <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
             rel="stylesheet"
         />
 
@@ -16,7 +16,6 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='./css/general.css') }}"
         />
-
         <link
             rel="stylesheet"
             href="{{ url_for('static', filename='./css/style.css') }}"
@@ -47,5 +46,35 @@
                 </ul>
             </nav>
         </header>
+
+        <!-- MAIN -->
+        <main>
+            <!-- HERO SECTION -->
+            <section class="section-hero">
+                <div class="container">
+                    <div class="hero-container">
+                        <div class="hero-content-box">
+                            <h1 class="heading-primary">
+                                Teachers, your time is well spent on teaching
+                            </h1>
+                            <p class="hero-text">
+                                A smart email management application that is
+                                powered by Artificial Intelligence to help you
+                                automate the process of responding to emails
+                                with our easy-to-use interface.
+                            </p>
+                            <button class="btn">Start here</button>
+                        </div>
+                        <div class="hero-img-box">
+                            <img
+                                src="{{ url_for('static', filename='./images/teacher.png') }}"
+                                alt="Animated image of a teacher sitting in front of a compute and writing an email"
+                                class="hero-img"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </body>
 </html>
