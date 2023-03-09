@@ -111,7 +111,7 @@
 /* CTA SECTION */
 /*************************/
 .section-cta {
-    padding: 9.6rem 0;
+    padding: 9.6rem 0 12.8rem;
 }
 
 .cta--container {
@@ -137,4 +137,35 @@
 
 .btn.btn--cta:hover {
     background-color: #ddd;
+}
+
+/*************************/
+/* FOOTER */
+/*************************/
+footer {
+    border-top: 1px solid #eee;
+    padding: 12.8rem 0 2.4rem;
+}
+
+.footer--container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.builder {
+    font-size: 1.6rem;
+}
+
+.footer-link:link,
+.footer-link:visited {
+    text-decoration: none;
+    color: #1864ab;
+    border-bottom: 2px solid currentColor;
+    transition: all 0.3s;
+}
+
+.footer-link:hover,
+.footer-link:active {
+    border-bottom: 2px solid transparent;
 }
