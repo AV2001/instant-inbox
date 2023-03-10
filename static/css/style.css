@@ -90,3 +90,22 @@
 .btn.btn--cta:hover {
     background-color: #ddd;
 }
+
+/** STYLES FOR ABOUT.HTML **/
+/*************************/
+/* ABOUT SECTION */
+/*************************/
+.section-about {
+    padding: 9.6rem 0 12.8rem;
+}
+
+.about-text-box {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.about-text {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    margin-bottom: 2.4rem;
+}
