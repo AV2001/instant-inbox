@@ -1,174 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <!-- GOOGLE FONTS (FONT FAMILY = INTER) -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
-            rel="stylesheet"
-        />
-
-        <!-- CSS STYLESHEETS -->
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='./css/general.css') }}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='./css/style.css') }}"
-        />
-
-        <title>InstantInbox &mdash; Home</title>
-    </head>
-    <body>
-        <!-- HEADER -->
-        <header class="main-header">
-            <a href="#">
-                <img
-                    src="{{ url_for('static', filename='./images/logo.png') }}"
-                    alt="InstantInbox logo"
-                    class="logo"
-                />
-            </a>
-            <nav class="main-nav">
-                <ul class="main-nav-list">
-                    <li><a href="#" class="main-nav-link">Home</a></li>
-                    <li><a href="#" class="main-nav-link">About</a></li>
-                    <li><a href="#" class="main-nav-link">Log in</a></li>
-                    <li>
-                        <a href="#" class="main-nav-link nav-cta"
-                            >Create Account</a
-                        >
-                    </li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- MAIN -->
-        <main>
-            <!-- HERO SECTION -->
-            <section class="section-hero">
-                <div class="container">
-                    <div class="hero-container">
-                        <div class="hero-content-box">
-                            <h1 class="heading-primary">
-                                Teachers, your time is well spent on teaching
-                            </h1>
-                            <p class="hero-text">
-                                A smart email management application that is
-                                powered by Artificial Intelligence to help you
-                                automate the process of responding to emails
-                                with our easy-to-use interface.
-                            </p>
-                            <button class="btn">Start here</button>
-                        </div>
-                        <div class="hero-img-box">
-                            <img
-                                src="{{ url_for('static', filename='./images/teacher.png') }}"
-                                alt="Animated image of a teacher sitting in front of a compute and writing an email"
-                                class="hero-img"
-                            />
-                        </div>
-                    </div>
+{% extends 'base.html' %} {% block content %}
+<!-- MAIN -->
+<main>
+    <!-- HERO SECTION -->
+    <section class="section-hero">
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content-box">
+                    <h1 class="heading-primary">
+                        Teachers, your time is well spent on teaching
+                    </h1>
+                    <p class="hero-text">
+                        A smart email management application that is powered by
+                        Artificial Intelligence to help you automate the process
+                        of responding to emails with our easy-to-use interface.
+                    </p>
+                    <button class="btn">Start here</button>
                 </div>
-            </section>
-
-            <!-- FEATURES SECTION -->
-            <section class="section-features">
-                <div class="container">
-                    <p class="sub-heading">Features</p>
-                    <h2 class="heading-secondary">How does all this work?</h2>
-
-                    <div class="features">
-                        <!-- FEATURE 1 -->
-                        <div class="feature-img-box">
-                            <img
-                                src="{{url_for('static', filename='./images/feature-image-1.png')}}"
-                                alt=""
-                                class="feature-img"
-                            />
-                        </div>
-                        <div class="feature-box">
-                            <p class="feature-heading">Preview Tags</p>
-                            <p class="feature-text">
-                                Our Machine Learning algorithm goes through the
-                                email's content and classifies them based on a
-                                tag.
-                            </p>
-                        </div>
-
-                        <!-- FEATURE 2 -->
-                        <div class="feature-box">
-                            <p class="feature-heading">Send Response</p>
-                            <p class="feature-text">
-                                You can select the tag's associated box to write
-                                the content that you would like to send out as
-                                the email.
-                            </p>
-                        </div>
-                        <div class="feature-img-box">
-                            <img
-                                src="{{url_for('static', filename='./images/feature-image-2.png')}}"
-                                alt="A hand-sketched image of pencil writing on a sticky note"
-                                class="feature-img"
-                            />
-                        </div>
-
-                        <!-- FEATURE 3 -->
-                        <div class="feature-img-box">
-                            <img
-                                src="{{url_for('static', filename='./images/feature-image-3.png')}}"
-                                alt=""
-                                class="feature-img"
-                            />
-                        </div>
-                        <div class="feature-box">
-                            <p class="feature-heading">Receive Feedback</p>
-                            <p class="feature-text">
-                                If the student is not satisfied with the
-                                response you wrote, you can always write a
-                                personalized one.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- CTA SECTION -->
-            <section class="section-cta">
-                <div class="container cta--container">
-                    <h2 class="heading-secondary cta--heading">
-                        Don't waste your precious time communicating back and
-                        forth when you could spend time teaching
-                    </h2>
-                    <button class="btn btn--cta">Get started today</button>
-                </div>
-            </section>
-        </main>
-
-        <!-- FOOTER -->
-        <footer>
-            <div class="container footer--container">
-                <a href="#">
+                <div class="hero-img-box">
                     <img
-                        src="{{ url_for('static', filename='./images/logo.png') }}"
-                        alt="InstantInbox logo"
-                        class="logo"
+                        src="{{ url_for('static', filename='./images/teacher.png') }}"
+                        alt="Animated image of a teacher sitting in front of a compute and writing an email"
+                        class="hero-img"
                     />
-                </a>
-                <p class="builder">
-                    Built by
-                    <a
-                        href="https://github.com/AV2001"
-                        target="_blank"
-                        class="footer-link"
-                        >Anirudh Vadlamani</a
-                    >
-                </p>
+                </div>
             </div>
-        </footer>
-    </body>
-</html>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="section-features">
+        <div class="container">
+            <p class="sub-heading">Features</p>
+            <h2 class="heading-secondary">How does all this work?</h2>
+
+            <div class="features">
+                <!-- FEATURE 1 -->
+                <div class="feature-img-box">
+                    <img
+                        src="{{url_for('static', filename='./images/feature-image-1.png')}}"
+                        alt=""
+                        class="feature-img"
+                    />
+                </div>
+                <div class="feature-box">
+                    <p class="feature-heading">Preview Tags</p>
+                    <p class="feature-text">
+                        Our Machine Learning algorithm goes through the email's
+                        content and classifies them based on a tag.
+                    </p>
+                </div>
+
+                <!-- FEATURE 2 -->
+                <div class="feature-box">
+                    <p class="feature-heading">Send Response</p>
+                    <p class="feature-text">
+                        You can select the tag's associated box to write the
+                        content that you would like to send out as the email.
+                    </p>
+                </div>
+                <div class="feature-img-box">
+                    <img
+                        src="{{url_for('static', filename='./images/feature-image-2.png')}}"
+                        alt="A hand-sketched image of pencil writing on a sticky note"
+                        class="feature-img"
+                    />
+                </div>
+
+                <!-- FEATURE 3 -->
+                <div class="feature-img-box">
+                    <img
+                        src="{{url_for('static', filename='./images/feature-image-3.png')}}"
+                        alt=""
+                        class="feature-img"
+                    />
+                </div>
+                <div class="feature-box">
+                    <p class="feature-heading">Receive Feedback</p>
+                    <p class="feature-text">
+                        If the student is not satisfied with the response you
+                        wrote, you can always write a personalized one.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="section-cta">
+        <div class="container cta--container">
+            <h2 class="heading-secondary cta--heading">
+                Don't waste your precious time communicating back and forth when
+                you could spend time teaching
+            </h2>
+            <button class="btn btn--cta">Get started today</button>
+        </div>
+    </section>
+</main>
+{% endblock content %}
