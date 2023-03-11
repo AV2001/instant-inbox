@@ -20,6 +20,10 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='./css/style.css') }}"
         />
+        <link
+            rel="stylesheet"
+            href="{{url_for('static', filename='./css/forms.css')}}"
+        />
 
         <!-- JAVASCRIPT FILES -->
         <script
@@ -45,15 +49,61 @@
                     <li>
                         <a href="/about" class="main-nav-link">About</a>
                     </li>
-                    <li><a href="#" class="main-nav-link">Log in</a></li>
                     <li>
-                        <a href="#" class="main-nav-link nav-cta"
-                            >Create Account</a
-                        >
+                        <button id="log-in-btn" class="btn btn--nav">
+                            Log in
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn--filled">Create Account</button>
                     </li>
                 </ul>
             </nav>
         </header>
+
+        <!-- LOG IN FORM -->
+        <form action="" id="log-in-form">
+            <h2>Log In</h2>
+            <button class="close-btn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                    />
+                </svg>
+            </button>
+            <div class="form-fields">
+                <!-- EMAIL -->
+                <div>
+                    <label for="log-in-email" id="log-in-email">Email</label>
+                    <input type="email" name="log-in-email" id="log-in-email" />
+                </div>
+
+                <!-- PASSWORD -->
+                <div>
+                    <label for="log-in-password">Password</label>
+                    <input
+                        type="password"
+                        name="log-in-password"
+                        id="log-in-password"
+                    />
+                </div>
+            </div>
+            <button
+                type="submit"
+                class="btn log-in--btn"
+                id="log-in-submit-btn"
+            >
+                Log In
+            </button>
+        </form>
 
         {% block content %} {% endblock %}
 
