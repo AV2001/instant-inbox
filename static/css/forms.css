@@ -1,6 +1,7 @@
 /* STYLES FOR THE FORMS */
 
-#log-in-form {
+#log-in-form,
+#create-account-form {
     display: none;
     background-color: #fff;
     border-radius: 12px;
@@ -16,19 +17,39 @@
     width: 25%;
 }
 
-.close-btn {
-    position: absolute;
-    top: 2%;
-    right: 2%;
+#create-account-form {
+    width: 30%;
 }
 
-#log-in-form h2 {
+.close-btn {
+    border: none;
+    background: none;
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    cursor: pointer;
+}
+
+.close-icon {
+    height: 2.4rem;
+    width: 2.4rem;
+    stroke: #333;
+    transition: stroke 0.3s;
+}
+
+.close-icon:hover {
+    stroke: #1864ab;
+}
+
+#log-in-form h2,
+#create-account-form h2 {
     font-size: 3rem;
     text-align: center;
     margin-bottom: 2.4rem;
 }
 
-#log-in-form .form-fields {
+#log-in-form .form-fields,
+#create-account-form .form-fields {
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -36,14 +57,16 @@
 }
 
 /* Styles for the labels */
-#log-in-form label {
+#log-in-form label,
+#create-account-form label {
     display: block;
     font-size: 1.6rem;
     margin-bottom: 0.8rem;
 }
 
 /* Styles for the form input fields */
-#log-in-form input {
+#log-in-form input,
+#create-account-form input {
     color: inherit;
     font-family: inherit;
     font-size: 1.8rem;
@@ -55,11 +78,20 @@
     transition: outline 0.3s;
 }
 
-#log-in-form input:focus {
+#create-account-form .names,
+#create-account-form .passwords {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+}
+
+#log-in-form input:focus,
+#create-account-form input:focus {
     outline: 2px solid #1864ab;
 }
 
-.log-in--btn {
+.log-in--btn,
+.create-account--btn {
     display: block;
     margin: 0 auto;
     background-color: #1864ab;
@@ -69,7 +101,8 @@
     transition: background-color 0.3s;
 }
 
-.log-in--btn:hover {
+.log-in--btn:hover,
+.create-account--btn:hover {
     background-color: #1c7ed6;
 }
 
