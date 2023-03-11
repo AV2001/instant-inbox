@@ -36,7 +36,7 @@
     <body>
         <!-- HEADER -->
         <header class="main-header">
-            <a href="#">
+            <a href="/">
                 <img
                     src="{{ url_for('static', filename='./images/logo.png') }}"
                     alt="InstantInbox logo"
@@ -55,7 +55,9 @@
                         </button>
                     </li>
                     <li>
-                        <button class="btn btn--filled">Create Account</button>
+                        <button id="create-account-btn" class="btn btn--filled">
+                            Create Account
+                        </button>
                     </li>
                 </ul>
             </nav>
@@ -71,6 +73,7 @@
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
+                    class="close-icon"
                 >
                     <path
                         stroke-linecap="round"
@@ -83,7 +86,12 @@
                 <!-- EMAIL -->
                 <div>
                     <label for="log-in-email" id="log-in-email">Email</label>
-                    <input type="email" name="log-in-email" id="log-in-email" />
+                    <input
+                        type="email"
+                        name="log-in-email"
+                        id="log-in-email"
+                        required
+                    />
                 </div>
 
                 <!-- PASSWORD -->
@@ -93,6 +101,7 @@
                         type="password"
                         name="log-in-password"
                         id="log-in-password"
+                        required
                     />
                 </div>
             </div>
@@ -105,12 +114,100 @@
             </button>
         </form>
 
+        <!-- CREATE ACCOUNT FORM -->
+        <form action="" id="create-account-form">
+            <h2>Create Account</h2>
+            <button class="close-btn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="close-icon"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                    />
+                </svg>
+            </button>
+
+            <div class="form-fields">
+                <!-- FIRST AND LAST NAME -->
+                <div>
+                    <div class="names">
+                        <div>
+                            <label for="first-name">First Name</label>
+                            <input
+                                type="text"
+                                name="first-name"
+                                id="first-name"
+                            />
+                        </div>
+                        <div>
+                            <label for="last-name">Last Name</label>
+                            <input
+                                type="text"
+                                name="last-name"
+                                id="last-name"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EMAIL -->
+                <div>
+                    <label for="create-account-email">Email</label>
+                    <input
+                        type="email"
+                        name="create-account-email"
+                        id="create-account-email"
+                    />
+                </div>
+
+                <!-- PASSWORD & CONFIRM PASSWORD -->
+                <div>
+                    <div class="passwords">
+                        <div>
+                            <label for="create-account-password"
+                                >Password</label
+                            >
+                            <input
+                                type="password"
+                                name="create-account-password"
+                                id="create-account-password"
+                            />
+                        </div>
+                        <div>
+                            <label for="create-account-confirm-password"
+                                >Confirm Password</label
+                            >
+                            <input
+                                type="password"
+                                name="create-account-confirm-password"
+                                id="create-account-confirm-password"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button
+                type="submit"
+                id="create-account-submit-btn"
+                class="btn create-account--btn"
+            >
+                Create Account
+            </button>
+        </form>
+
         {% block content %} {% endblock %}
 
         <!-- FOOTER -->
         <footer>
             <div class="container footer--container">
-                <a href="#">
+                <a href="/">
                     <img
                         src="{{ url_for('static', filename='./images/logo.png') }}"
                         alt="InstantInbox logo"
