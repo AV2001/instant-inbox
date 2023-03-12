@@ -64,7 +64,7 @@
         </header>
 
         <!-- LOG IN FORM -->
-        <form action="" id="log-in-form">
+        <form id="log-in-form">
             <h2>Log In</h2>
             <button class="close-btn">
                 <svg
@@ -115,7 +115,11 @@
         </form>
 
         <!-- CREATE ACCOUNT FORM -->
-        <form action="" id="create-account-form">
+        <form
+            id="create-account-form"
+            action="/user/create-account"
+            method="post"
+        >
             <h2>Create Account</h2>
             <button class="close-btn">
                 <svg
@@ -144,6 +148,7 @@
                                 type="text"
                                 name="first-name"
                                 id="first-name"
+                                required
                             />
                         </div>
                         <div>
@@ -152,6 +157,7 @@
                                 type="text"
                                 name="last-name"
                                 id="last-name"
+                                required
                             />
                         </div>
                     </div>
@@ -164,6 +170,7 @@
                         type="email"
                         name="create-account-email"
                         id="create-account-email"
+                        required
                     />
                 </div>
 
@@ -178,6 +185,7 @@
                                 type="password"
                                 name="create-account-password"
                                 id="create-account-password"
+                                required
                             />
                         </div>
                         <div>
@@ -188,6 +196,7 @@
                                 type="password"
                                 name="create-account-confirm-password"
                                 id="create-account-confirm-password"
+                                required
                             />
                         </div>
                     </div>
