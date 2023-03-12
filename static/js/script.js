@@ -66,3 +66,33 @@ overlayContainer.addEventListener('click', () => {
     createAccountForm.style.display = 'none';
     overlayContainer.classList.toggle('overlay');
 });
+
+createAccountForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // Create a user object
+    const userObject = {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: createAccountEmail.value,
+        password: createAccountPassword.value,
+        confirmPassword: createAccountConfirmPassword.value,
+    };
+
+    // Use fetch to send a post request to the Flask server
+    fetch('/create-account/', {
+        method: 'POST',
+        // Convert user object to JSON string
+        body: JSON.stringify(userObject),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        // Handle response from the server
+        .then((response) => response.json())
+        // Catch errors
+        .then((data) => console.log(data))
+        .catch((error) => {
+            console.log(error);
+        });
+});
