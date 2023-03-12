@@ -1,9 +1,9 @@
-from flask import Flask, render_template
-from user.models import User
+from flask import Flask, render_template, request, jsonify
+from models import User
 
 app = Flask(__name__)
 
-
+# Routes
 @app.route('/')
 def home():
     return render_template('index.html', title='Home')
@@ -14,7 +14,7 @@ def about():
     return render_template('about.html', title='About')
 
 
-@app.route('/user/create-account', methods=['POST'])
+@app.route('/create-account/', methods=['POST'])
 def create_account():
     return User().create_account()
 
