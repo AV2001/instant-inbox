@@ -9,6 +9,7 @@ def home():
     return render_template('index.html', title='Home')
 
 
+# Rendering the about.html
 @app.route('/about/')
 def about():
     return render_template('about.html', title='About')
@@ -16,6 +17,7 @@ def about():
 
 @app.route('/create-account/', methods=['POST'])
 def create_account():
+    # Method for inserting data from create account form to the database
     return User().create_account()
 
 
