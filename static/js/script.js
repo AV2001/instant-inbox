@@ -91,8 +91,17 @@ createAccountForm.addEventListener('submit', (event) => {
         // Handle response from the server
         .then((response) => response.json())
         // Catch errors
-        .then((data) => console.log(data))
+        .then((data) => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                alert('Account Created Successfully!');
+            }
+        })
         .catch((error) => {
             console.log(error);
         });
+
+    createAccountForm.style.display = 'none';
+    overlayContainer.classList.toggle('overlay');
 });
