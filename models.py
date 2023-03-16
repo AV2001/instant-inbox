@@ -6,7 +6,7 @@ import pymongo
 # Database
 client = pymongo.MongoClient(
     'mongodb+srv://test:1234@cluster0.es4s8d0.mongodb.net/test')
-db = client.users
+db = client.instantInbox
 
 
 class User:
@@ -16,17 +16,17 @@ class User:
         # Create the user object
         user = {
             '_id': uuid.uuid4().hex,
-            'first_name': request.get_json()['firstName'],
-            'last_name': request.get_json()['lastName'],
+            'firstName': request.get_json()['firstName'],
+            'lastName': request.get_json()['lastName'],
             'email': request.get_json()['email'],
             'password': request.get_json()['password'],
-            'confirm_password': request.get_json()['confirmPassword']
+            'confirmPassword': request.get_json()['confirmPassword']
         }
 
         # Encrypt the password
         user['password'] = pbkdf2_sha256.encrypt(user['password'])
-        user['confirm_password'] = pbkdf2_sha256.encrypt(
-            user['confirm_password'])
+        user['confirmPassword'] = pbkdf2_sha256.encrypt(
+            user['confirmPassword'])
 
         # Check for existing email address
         if db.users.find_one({'email': user['email']}):
