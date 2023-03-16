@@ -90,18 +90,44 @@ createAccountForm.addEventListener('submit', (event) => {
     })
         // Handle response from the server
         .then((response) => response.json())
-        // Catch errors
         .then((data) => {
-            if (data.error) {
-                alert(data.error);
+            if (data.message) {
+                alert(data.message);
             } else {
                 alert('Account Created Successfully!');
+                createAccountForm.style.display = 'none';
+                overlayContainer.classList.toggle('overlay');
             }
         })
-        .catch((error) => {
-            console.log(error);
-        });
+        // Catch errors
+        .catch((error) => console.log(error));
+});
 
-    createAccountForm.style.display = 'none';
-    overlayContainer.classList.toggle('overlay');
+logInForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // Logged in user
+    const userObject = {
+        email: logInEmail.value,
+        password: logInPassword.value,
+    };
+
+    fetch('/login/', {
+        method: 'POST',
+        body: JSON.stringify(userObject),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.message) {
+                alert(data.message);
+            } else {
+                localStorage.setItem(data.email, JSON.stringify(data));
+                logInForm.style.display = 'none';
+                overlayContainer.classList.toggle('overlay');
+            }
+        })
+        .catch((error) => console.log(error));
 });
