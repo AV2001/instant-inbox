@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 from passlib.hash import pbkdf2_sha256
 import uuid
 import pymongo
@@ -10,7 +10,6 @@ db = client.instantInbox
 
 
 class User:
-
     def create_account(self):
 
         # Create the user object
@@ -24,15 +23,31 @@ class User:
         }
 
         # Encrypt the password
-        user['password'] = pbkdf2_sha256.encrypt(user['password'])
-        user['confirmPassword'] = pbkdf2_sha256.encrypt(
-            user['confirmPassword'])
+        # user['password'] = pbkdf2_sha256.encrypt(user['password'])
+        # user['confirmPassword'] = pbkdf2_sha256.encrypt(
+        #     user['confirmPassword'])
 
         # Check for existing email address
         if db.users.find_one({'email': user['email']}):
-            return jsonify({'error': 'Email already exists'})
+            return jsonify({'message': 'Email already exists'})
 
         # Inserting user in the database
         db.users.insert_one(user)
 
+        # Return user with status code set to 200
         return jsonify(user), 200
+
+    def login(self):
+
+        user = {
+            'email': request.get_json()['email'],
+            'password': request.get_json()['password']
+        }
+
+        retrieved_user = db.users.find_one({'password': user['password']})
+
+        # Check whether email address and password match
+        if retrieved_user:
+            return jsonify(retrieved_user), 200
+
+        return jsonify({'message': 'Your email/password is wrong!'})
