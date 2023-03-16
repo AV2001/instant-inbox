@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template
 from models import User
 
 app = Flask(__name__)
 
-# Routes
+
+# Rendering the index.html
 @app.route('/')
 def home():
     return render_template('index.html', title='Home')
@@ -17,8 +18,14 @@ def about():
 
 @app.route('/create-account/', methods=['POST'])
 def create_account():
-    # Method for inserting data from create account form to the database
+    # Insert data from create account form to the database
     return User().create_account()
+
+
+@app.route('/login/', methods=['POST'])
+def login():
+    # Check whether credentials entered in log in form match with those in the database
+    return User().login()
 
 
 if __name__ == '__main__':
