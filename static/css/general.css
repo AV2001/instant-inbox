@@ -83,6 +83,12 @@ body {
     background-color: #2f74b3;
 }
 
+#btn-outlook-login {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
 .center-text {
     text-align: center;
 }
