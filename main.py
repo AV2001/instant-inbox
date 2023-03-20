@@ -15,9 +15,6 @@ load_dotenv()
 APPLICATION_ID = os.environ['APPLICATION_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
 
-print(APPLICATION_ID)
-print(CLIENT_SECRET)
-
 
 app = Flask(__name__)
 
