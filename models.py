@@ -1,11 +1,15 @@
 from flask import jsonify, request
-from passlib.hash import pbkdf2_sha256
 import uuid
 import pymongo
+from dotenv.main import load_dotenv
+import os
+
+load_dotenv()
 
 # Database
-client = pymongo.MongoClient(
-    'mongodb+srv://test:1234@cluster0.es4s8d0.mongodb.net/test')
+client = pymongo.MongoClient(os.environ['MONGODB_CONNECTION_STRING'])
+
+# Give name for the database
 db = client.instantInbox
 
 
@@ -21,11 +25,6 @@ class User:
             'password': request.get_json()['password'],
             'confirmPassword': request.get_json()['confirmPassword']
         }
-
-        # Encrypt the password
-        # user['password'] = pbkdf2_sha256.encrypt(user['password'])
-        # user['confirmPassword'] = pbkdf2_sha256.encrypt(
-        #     user['confirmPassword'])
 
         # Check for existing email address
         if db.users.find_one({'email': user['email']}):
