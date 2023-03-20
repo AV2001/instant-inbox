@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, url_for
+from flask import Flask, request, redirect, render_template, session, url_for, jsonify
 from msal import ConfidentialClientApplication
 from uuid import uuid4
 import secrets
@@ -12,11 +12,16 @@ from models import User
 
 load_dotenv()
 
-APPLICATION_ID = os.environ['APPLICATION_ID']
-CLIENT_SECRET = os.environ['CLIENT_SECRET']
-
 
 app = Flask(__name__)
+app.secret_key = secrets.token_hex(32)
+
+APPLICATION_ID = os.environ['APPLICATION_ID']
+CLIENT_SECRET = os.environ['CLIENT_SECRET']
+AUTHORITY = 'https://login.microsoftonline.com/common'
+SCOPES = ['User.Read', 'Mail.Read']
+REDIRECT_URI = 'http://localhost:5000/callback'
+BASE_URL = 'https://graph.microsoft.com/v1.0/me/'
 
 
 # Rendering the index.html
@@ -84,7 +89,17 @@ def me():
         'https://graph.microsoft.com/v1.0/me', headers=headers)
     data = response.json()
     email_address = data['mail']
-    return email_address
+
+    # Get user's inbox messages
+    messages_response = requests.get(
+        BASE_URL + 'messages', headers=headers)
+    messages_data = messages_response.json()
+
+    # Return email address and inbox messages as JSON
+    return jsonify({
+        'email_address': email_address,
+        'inbox_messages': messages_data['value']
+    })
 
 
 if __name__ == '__main__':
