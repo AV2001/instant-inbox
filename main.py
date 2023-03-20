@@ -34,6 +34,25 @@ def about():
     return render_template('about.html', title='About')
 
 
+# Outlook authentication
+@app.route('/login/')
+def login():
+    session['state'] = str(uuid4())
+    msal_app = ConfidentialClientApplication(
+        client_id=APPLICATION_ID,
+        client_credential=CLIENT_SECRET,
+        authority=AUTHORITY
+    )
+
+    authorization_url = msal_app.get_authorization_request_url(
+        scopes=SCOPES,
+        redirect_uri=REDIRECT_URI,
+        state=session['state']
+    )
+
+    return redirect(authorization_url)
+
+
 if __name__ == '__main__':
     # set debug to True when in development mode
     app.run(debug=True)
