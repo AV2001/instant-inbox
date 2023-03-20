@@ -76,6 +76,20 @@ def callback():
     return redirect(url_for('me'))
 
 
+# Uses access token to query the Microsoft Graph API and get the logged in user's email address
+@app.route('/me')
+def me():
+    headers = {
+        'Authorization': f'Bearer {session["access_token"]}',
+        'Content-Type': 'application/json'
+    }
+    response = requests.get(
+        'https://graph.microsoft.com/v1.0/me', headers=headers)
+    data = response.json()
+    email_address = data['mail']
+    return email_address
+
+
 if __name__ == '__main__':
     # set debug to True when in development mode
     app.run(debug=True)
