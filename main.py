@@ -53,6 +53,29 @@ def login():
     return redirect(authorization_url)
 
 
+# Handles the callback from Azure Active Directory
+@app.route('/callback')
+def callback():
+    if request.args.get('state') != session.get('state'):
+        return 'State Mismatch', 400
+
+    msal_app = ConfidentialClientApplication(
+        client_id=APPLICATION_ID,
+        client_credential=CLIENT_SECRET,
+        authority=AUTHORITY
+    )
+
+    token_response = msal_app.acquire_token_by_authorization_code(
+        request.args['code'],
+        scopes=SCOPES,
+        redirect_uri=REDIRECT_URI
+    )
+
+    # Stores the access token in the session
+    session['access_token'] = token_response['access_token']
+    return redirect(url_for('me'))
+
+
 if __name__ == '__main__':
     # set debug to True when in development mode
     app.run(debug=True)
