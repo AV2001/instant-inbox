@@ -3,7 +3,7 @@ from msal import ConfidentialClientApplication
 from uuid import uuid4
 import secrets
 import requests
-from dotenv.main import load_dotenv
+from dotenv import load_dotenv
 import os
 
 
@@ -19,6 +19,7 @@ app.secret_key = secrets.token_hex(32)
 # Get the valkues from the .env file
 APPLICATION_ID = os.environ.get('APPLICATION_ID')
 CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+
 
 AUTHORITY = 'https://login.microsoftonline.com/common'
 SCOPES = ['User.Read', 'Mail.Read']
