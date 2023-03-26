@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, url_for, jsonify
+from flask import Flask, request, redirect, render_template, session, url_for, jsonify, send_from_directory
 from msal import ConfidentialClientApplication
 from uuid import uuid4
 import secrets
@@ -102,6 +102,11 @@ def me():
         'email_address': email_address,
         'inbox_messages': messages_data['value']
     })
+
+
+@app.route('/.well-known/<path:path>')
+def serve_well_known(path):
+    return send_from_directory('.well-known', path)
 
 
 if __name__ == '__main__':
