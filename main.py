@@ -104,7 +104,7 @@ def me():
     })
 
 
-@app.route('/.well-known/<path:path>')
+@app.route('//.well-known/<path:path>')
 def serve_well_known(path):
     return send_from_directory('.well-known', path)
 
