@@ -22,7 +22,7 @@ CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
 
 AUTHORITY = 'https://login.microsoftonline.com/common'
 SCOPES = ['User.Read', 'Mail.Read']
-REDIRECT_URI = 'http://localhost:5000/callback'
+REDIRECT_URI = 'https://instant-inbox.herokuapp.com/callback'
 BASE_URL = 'https://graph.microsoft.com/v1.0/me/'
 
 
