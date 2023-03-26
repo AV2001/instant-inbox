@@ -6,15 +6,15 @@ import os
 
 load_dotenv()
 
-# MONGODB_CONNECTION_STRING = os.environ['MONGODB_CONNECTION_STRING']
+# Get the connection string for the database from.env file
+MONGODB_CONNECTION_STRING = os.environ.get('MONGODB_CONNECTION_STRING')
 
-
-# # Database
-# client = pymongo.MongoClient(MONGODB_CONNECTION_STRING)
+# Database
+client = pymongo.MongoClient(MONGODB_CONNECTION_STRING)
 
 
 # Give name for the database
-# db = client.instantInbox
+db = client.instantInbox
 
 
 class User:

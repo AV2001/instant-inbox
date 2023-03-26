@@ -16,8 +16,10 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
 
-APPLICATION_ID = os.environ['APPLICATION_ID']
-CLIENT_SECRET = os.environ['CLIENT_SECRET']
+# Get the valkues from the .env file
+APPLICATION_ID = os.environ.get('APPLICATION_ID')
+CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+
 AUTHORITY = 'https://login.microsoftonline.com/common'
 SCOPES = ['User.Read', 'Mail.Read']
 REDIRECT_URI = 'http://localhost:5000/callback'
