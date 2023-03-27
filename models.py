@@ -7,7 +7,7 @@ import os
 load_dotenv()
 
 # Get the connection string for the database from.env file
-MONGODB_CONNECTION_STRING = os.environ.get('MONGODB_CONNECTION_STRING')
+MONGODB_CONNECTION_STRING = os.getenv('MONGODB_CONNECTION_STRING')
 
 # Database
 client = pymongo.MongoClient(MONGODB_CONNECTION_STRING)

@@ -17,8 +17,8 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
 
 # Get the valkues from the .env file
-APPLICATION_ID = os.environ.get('APPLICATION_ID')
-CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+APPLICATION_ID = os.getenv('APPLICATION_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 
 AUTHORITY = 'https://login.microsoftonline.com/common'
@@ -54,6 +54,8 @@ def login():
         redirect_uri=REDIRECT_URI,
         state=session['state']
     )
+
+    print(f'Authorization URL: ${authorization_url}')
 
     return redirect(authorization_url)
 
