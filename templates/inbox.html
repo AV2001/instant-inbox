@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block content %}
+<!-- MAIN -->
+<main>
+    <h1>Welcome, {{email_address}}</h1>
+    <h2>Inbox</h2>
+    <ul>
+        {% for message in messages %}
+        <li>
+            <strong>From:</strong> {{ message.sender.emailAddress.name }} &lt;{{
+            message.sender.emailAddress.address }}&gt;<br />
+            <strong>Subject:</strong> {{ message.subject }}
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock content %}
