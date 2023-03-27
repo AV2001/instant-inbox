@@ -55,8 +55,6 @@ def login():
         state=session['state']
     )
 
-    print(f'Authorization URL: ${authorization_url}')
-
     return redirect(authorization_url)
 
 
