@@ -62,7 +62,7 @@ def login():
 @app.route('/callback')
 def callback():
     if request.args.get('state') != session.get('state'):
-        return 'State Mismatch', 400
+        return 'Please try again.', 400
 
     msal_app = ConfidentialClientApplication(
         client_id=APPLICATION_ID,
@@ -91,7 +91,7 @@ def me():
     response = requests.get(
         'https://graph.microsoft.com/v1.0/me', headers=headers)
     data = response.json()
-    email_address = data['mail']
+    email_address = data.get('mail') or data.get('userPrincipalName')
 
     # Get user's inbox messages
     messages_response = requests.get(
@@ -99,10 +99,11 @@ def me():
     messages_data = messages_response.json()
 
     # Return email address and inbox messages as JSON
-    return jsonify({
-        'email_address': email_address,
-        'inbox_messages': messages_data['value']
-    })
+    # return jsonify({
+    #     'email_address': email_address,
+    #     'inbox_messages': messages_data['value']
+    # })
+    return jsonify(email_address)
 
 
 @app.route('/.well-known/<path:path>')
