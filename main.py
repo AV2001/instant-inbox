@@ -96,14 +96,10 @@ def me():
     # Get user's inbox messages
     messages_response = requests.get(
         BASE_URL + 'messages', headers=headers)
-    messages_data = messages_response.json()
+    messages_data = messages_response.json().get('value', [])
 
-    # Return email address and inbox messages as JSON
-    # return jsonify({
-    #     'email_address': email_address,
-    #     'inbox_messages': messages_data['value']
-    # })
-    return jsonify(email_address, messages_data)
+    # The inbox.html will be rendered with the email address and the list of emails
+    return render_template('inbox.html', email_address=email_address, messages=messages_data)
 
 
 @app.route('/.well-known/<path:path>')
