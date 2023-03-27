@@ -103,7 +103,7 @@ def me():
     #     'email_address': email_address,
     #     'inbox_messages': messages_data['value']
     # })
-    return jsonify(email_address)
+    return jsonify(email_address, messages_data)
 
 
 @app.route('/.well-known/<path:path>')
