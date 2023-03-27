@@ -27,16 +27,22 @@ REDIRECT_URI = 'https://instant-inbox.herokuapp.com/callback'
 BASE_URL = 'https://graph.microsoft.com/v1.0/me/'
 
 
-# Rendering the index.html
+# Renders index.html
 @app.route('/')
 def home():
     return render_template('index.html', title='Home')
 
 
-# Rendering the about.html
+# Renders about.html
 @app.route('/about/')
 def about():
     return render_template('about.html', title='About')
+
+
+# Renders inbox.html
+@app.route('/inbox')
+def inbox():
+    return render_template('inbox.html', title='Inbox')
 
 
 # Outlook authentication
@@ -48,13 +54,11 @@ def login():
         client_credential=CLIENT_SECRET,
         authority=AUTHORITY
     )
-
     authorization_url = msal_app.get_authorization_request_url(
         scopes=SCOPES,
         redirect_uri=REDIRECT_URI,
         state=session['state']
     )
-
     return redirect(authorization_url)
 
 
@@ -63,22 +67,19 @@ def login():
 def callback():
     if request.args.get('state') != session.get('state'):
         return 'Please try again.', 400
-
     msal_app = ConfidentialClientApplication(
         client_id=APPLICATION_ID,
         client_credential=CLIENT_SECRET,
         authority=AUTHORITY
     )
-
     token_response = msal_app.acquire_token_by_authorization_code(
         request.args['code'],
         scopes=SCOPES,
         redirect_uri=REDIRECT_URI
     )
-
     # Stores the access token in the session
     session['access_token'] = token_response['access_token']
-    return redirect(url_for('me'))
+    return redirect(url_for('inbox'))
 
 
 # Uses access token to query the Microsoft Graph API and get the logged in user's email address
@@ -92,12 +93,10 @@ def me():
         'https://graph.microsoft.com/v1.0/me', headers=headers)
     data = response.json()
     email_address = data.get('mail') or data.get('userPrincipalName')
-
     # Get user's inbox messages
     messages_response = requests.get(
         BASE_URL + 'messages', headers=headers)
     messages_data = messages_response.json().get('value', [])
-
     # The inbox.html will be rendered with the email address and the list of emails
     return render_template('inbox.html', email_address=email_address, messages=messages_data)
 
