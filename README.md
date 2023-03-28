@@ -10,6 +10,7 @@ Instant Inbox is an easy-to-use intelligent email management web application tha
 -   Python
 -   Flask
 -   MongoDB
+- Heroku
 
 ## Contact Me 📞
 
