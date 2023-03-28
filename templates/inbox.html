@@ -15,11 +15,15 @@
         // Update the frontend with the email address and messages
         document.getElementById('email-address').innerText = email_address;
         const messagesList = document.getElementById('messages');
+
         messages.forEach((message) => {
+            console.log(message);
+
             const messageElement = document.createElement('li');
             messageElement.innerHTML = `
-                    <strong>From:</strong> ${message.sender.emailAddress.name} &lt;${message.sender.emailAddress.address}&gt;<br>
-                    <strong>Subject:</strong> ${message.subject}
+                    <strong>From:</strong> ${message.from.emailAddress.name} (${message.from.emailAddress.address})<br>
+                    <strong>Subject:</strong> ${message.subject} <br>
+                    <strong>Content:</strong> ${message.bodyPreview}
                 `;
             messagesList.appendChild(messageElement);
         });
