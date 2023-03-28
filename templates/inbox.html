@@ -2,7 +2,7 @@
 
 <script>
     async function fetchInbox() {
-        const response = await fetch('/me');
+        const response = await fetch('/fetch-emails');
         const data = await response.json();
         const { email_address, messages } = data;
 
