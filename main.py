@@ -23,7 +23,7 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 AUTHORITY = 'https://login.microsoftonline.com/common'
 SCOPES = ['User.Read', 'Mail.ReadBasic']
-REDIRECT_URI = 'https://instant-inbox.herokuapp.com/callback'
+REDIRECT_URI = 'http://localhost:5000/callback'
 BASE_URL = 'https://graph.microsoft.com/v1.0/me/'
 
 
@@ -85,20 +85,34 @@ def callback():
 # Uses access token to query the Microsoft Graph API and get the logged in user's email address
 @app.route('/me')
 def me():
-    headers = {
-        'Authorization': f'Bearer {session["access_token"]}',
-        'Content-Type': 'application/json'
-    }
-    response = requests.get(
-        'https://graph.microsoft.com/v1.0/me', headers=headers)
-    data = response.json()
-    email_address = data.get('mail') or data.get('userPrincipalName')
-    # Get user's inbox messages
-    messages_response = requests.get(
-        BASE_URL + 'messages', headers=headers)
-    messages_data = messages_response.json().get('value', [])
-    # The inbox.html will be rendered with the email address and the list of emails
-    return render_template('inbox.html', email_address=email_address, messages=messages_data)
+    try:
+        headers = {
+            'Authorization': f'Bearer {session["access_token"]}',
+            'Content-Type': 'application/json'
+        }
+        response = requests.get(
+            'https://graph.microsoft.com/v1.0/me', headers=headers)
+
+        # Check for errors in the response
+        response.raise_for_status()
+
+        data = response.json()
+        email_address = data.get('mail') or data.get('userPrincipalName')
+
+        # Get user's inbox messages
+        messages_response = requests.get(
+            BASE_URL + 'messages', headers=headers)
+
+        # Check for errors in the messages response
+        messages_response.raise_for_status()
+
+        messages_data = messages_response.json().get('value', [])
+
+        return jsonify(email_address=email_address, messages=messages_data)
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify(error=str(e)), 500
 
 
 @app.route('/.well-known/<path:path>')
