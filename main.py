@@ -83,8 +83,8 @@ def callback():
 
 
 # Uses access token to query the Microsoft Graph API and get the logged in user's email address
-@app.route('/me')
-def me():
+@app.route('/fetch-emails')
+def fetch_emails():
     try:
         headers = {
             'Authorization': f'Bearer {session["access_token"]}',
