@@ -1,16 +1,33 @@
 {% extends 'base.html' %} {% block content %}
 <!-- MAIN -->
 <main>
-    <h1>Welcome, {{email_address}}</h1>
+    <script>
+        async function fetchInbox() {
+            const response = await fetch('/me');
+            const data = await response.json();
+            const { email_address, messages } = data;
+
+            // Store the email address in local/session storage
+            sessionStorage.setItem('email_address', email_address);
+
+            // Update the frontend with the email address and messages
+            document.getElementById('email-address').innerText = email_address;
+            const messagesList = document.getElementById('messages');
+            messages.forEach((message) => {
+                const messageElement = document.createElement('li');
+                messageElement.innerHTML = `
+                    <strong>From:</strong> ${message.sender.emailAddress.name} &lt;${message.sender.emailAddress.address}&gt;<br>
+                    <strong>Subject:</strong> ${message.subject}
+                `;
+                messagesList.appendChild(messageElement);
+            });
+        }
+
+        window.onload = fetchInbox;
+    </script>
+
+    <h1>Welcome, <span id="email-address"></span></h1>
     <h2>Inbox</h2>
-    <ul>
-        {% for message in messages %}
-        <li>
-            <strong>From:</strong> {{ message.sender.emailAddress.name }} &lt;{{
-            message.sender.emailAddress.address }}&gt;<br />
-            <strong>Subject:</strong> {{ message.subject }}
-        </li>
-        {% endfor %}
-    </ul>
+    <ul id="messages"></ul>
 </main>
 {% endblock content %}
