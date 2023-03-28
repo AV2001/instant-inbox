@@ -1,6 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<!-- MAIN -->
-<main>
+<section>
     <script>
         async function fetchInbox() {
             const response = await fetch('/me');
@@ -22,10 +21,11 @@
                 messagesList.appendChild(messageElement);
             });
         }
-
         window.onload = fetchInbox;
     </script>
-
+</section>
+<!-- MAIN -->
+<main>
     <h1>Welcome, <span id="email-address"></span></h1>
     <h2>Inbox</h2>
     <ul id="messages"></ul>
