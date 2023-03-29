@@ -6,26 +6,30 @@
         const data = await response.json();
         const { email_address, messages } = data;
 
-        console.log(email_address);
-        console.log(messages);
-
         // Store the email address in local/session storage
         sessionStorage.setItem('email_address', email_address);
 
-        // Update the frontend with the email address and messages
-        document.getElementById('email-address').innerText = email_address;
-        const messagesList = document.getElementById('messages');
-
         messages.forEach((message) => {
-            console.log(message);
+            if (!message.isRead) {
+                console.log(message);
 
-            const messageElement = document.createElement('li');
-            messageElement.innerHTML = `
-                    <strong>From:</strong> ${message.from.emailAddress.name} (${message.from.emailAddress.address})<br>
-                    <strong>Subject:</strong> ${message.subject} <br>
-                    <strong>Content:</strong> ${message.bodyPreview}
-                `;
-            messagesList.appendChild(messageElement);
+                const sectionEmails = document.querySelector('.section-emails');
+                const figureEl = document.createElement('figure');
+                const fromEmailAddressEl = document.createElement('p');
+                const fromNameEl = document.createElement('p');
+                const emailSubjectEl = document.createElement('p');
+
+                fromEmailAddressEl.textContent =
+                    message.from.emailAddress.address;
+                fromNameEl.textContent = message.from.emailAddress.name;
+                emailSubjectEl.textContent = message.subject;
+
+                figureEl.appendChild(fromEmailAddressEl);
+                figureEl.appendChild(fromNameEl);
+                figureEl.appendChild(emailSubjectEl);
+
+                sectionEmails.appendChild(figureEl);
+            }
         });
     }
     window.onload = fetchInbox;
@@ -33,8 +37,6 @@
 
 <!-- MAIN -->
 <main>
-    <h1>Welcome, <span id="email-address"></span></h1>
-    <h2>Inbox</h2>
-    <ul id="messages"></ul>
+    <section class="section-emails"></section>
 </main>
 {% endblock content %}
