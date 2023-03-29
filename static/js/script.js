@@ -2,7 +2,9 @@
 
 const btnOutlookLogin = document.getElementById('btn-outlook-login');
 
-btnOutlookLogin.addEventListener(
-    'click',
-    () => (window.location.href = '/login')
-);
+if (btnOutlookLogin) {
+    btnOutlookLogin.addEventListener(
+        'click',
+        () => (window.location.href = '/login')
+    );
+}
