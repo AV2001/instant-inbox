@@ -1,0 +1,39 @@
+/** STYLES FOR INBOX.HTML **/
+/*************************/
+/* EMAILS SECTION */
+/*************************/
+.section-emails {
+    padding: 9.6rem 0;
+}
+
+.email-card {
+    background-color: #f7f7f7;
+    padding: 1.2rem;
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+.email-card:hover {
+    background-color: #eee;
+}
+
+.email-address {
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+.full-name {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.email-subject {
+    font-size: 1.6rem;
+    font-weight: 400;
+}
