@@ -22,7 +22,7 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 
 AUTHORITY = 'https://login.microsoftonline.com/common'
-SCOPES = ['User.Read', 'Mail.ReadBasic']
+SCOPES = ['User.Read', 'Mail.Read']
 REDIRECT_URI = 'http://localhost:5000/callback'
 BASE_URL = 'https://graph.microsoft.com/v1.0/me/'
 
