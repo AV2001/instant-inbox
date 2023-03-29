@@ -11,24 +11,43 @@
 
         messages.forEach((message) => {
             if (!message.isRead) {
-                console.log(message);
+                const htmlContent = message.body.content;
+
+                // Create a temporary DOM element
+                const tempElement = document.createElement('div');
+
+                // Set the HTML content as the innerHTML of the temporary element
+                tempElement.innerHTML = htmlContent;
+
+                // Extract the text content from the temporary element
+                const textContent =
+                    tempElement.textContent || tempElement.innerText;
 
                 const sectionEmails = document.querySelector('.section-emails');
-                const figureEl = document.createElement('figure');
-                const fromEmailAddressEl = document.createElement('p');
-                const fromNameEl = document.createElement('p');
-                const emailSubjectEl = document.createElement('p');
+                const container = document.querySelector('.container');
+                const emailCard = document.createElement('figure');
+                const emailAddress = document.createElement('p');
+                const fullName = document.createElement('p');
+                const emailSubject = document.createElement('p');
+                const emailContent = document.createElement('p');
 
-                fromEmailAddressEl.textContent =
-                    message.from.emailAddress.address;
-                fromNameEl.textContent = message.from.emailAddress.name;
-                emailSubjectEl.textContent = message.subject;
+                emailContent.textContent = textContent;
 
-                figureEl.appendChild(fromEmailAddressEl);
-                figureEl.appendChild(fromNameEl);
-                figureEl.appendChild(emailSubjectEl);
+                emailCard.classList.add('email-card');
+                emailAddress.classList.add('email-address');
+                fullName.classList.add('full-name');
+                emailSubject.classList.add('email-subject');
 
-                sectionEmails.appendChild(figureEl);
+                emailAddress.textContent = message.from.emailAddress.address;
+                fullName.textContent = message.from.emailAddress.name;
+                emailSubject.textContent = message.subject;
+
+                emailCard.appendChild(fullName);
+                emailCard.appendChild(emailAddress);
+                emailCard.appendChild(emailSubject);
+                emailCard.appendChild(emailContent);
+
+                container.appendChild(emailCard);
             }
         });
     }
@@ -37,6 +56,8 @@
 
 <!-- MAIN -->
 <main>
-    <section class="section-emails"></section>
+    <section class="section-emails">
+        <div class="container"></div>
+    </section>
 </main>
 {% endblock content %}
