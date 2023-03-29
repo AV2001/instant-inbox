@@ -101,7 +101,7 @@ def fetch_emails():
 
         # Get user's inbox messages
         messages_response = requests.get(
-            BASE_URL + 'messages', headers=headers)
+            BASE_URL + f"messages?$filter=isRead eq false", headers=headers)
 
         # Check for errors in the messages response
         messages_response.raise_for_status()
