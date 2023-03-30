@@ -115,6 +115,14 @@ def fetch_emails():
         return jsonify(error=str(e)), 500
 
 
+# Insert the user data into the database if it's not there
+@app.route('/save-user-data', methods=['POST'])
+def save_user_data():
+    email_address = request.json['email_address']
+    user_data = User().save_user_data(email_address)
+    return jsonify(user_data)
+
+
 @app.route('/.well-known/<path:path>')
 def serve_well_known(path):
     return send_from_directory('.well-known', path)
