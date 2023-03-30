@@ -37,3 +37,15 @@ class User:
             user_data.pop('_id', None)
 
         return user_data
+
+    def update_tags(self, email, module_change, travel_leave, sick_leave):
+        result = db.users.update_one(
+            {'email': email},
+            {'$set': {
+                'module_change': module_change,
+                'travel_leave': travel_leave,
+                'sick_leave': sick_leave
+            }}
+        )
+
+        return result.modified_count > 0
