@@ -30,8 +30,10 @@ class User:
         existing_user = db.users.find_one({'email': email_address})
         if existing_user:
             user_data = existing_user
+            user_data.pop('_id', None)
         else:
             # Insert new user with empty tags
             db.users.insert_one(user_data)
+            user_data.pop('_id', None)
 
         return user_data
