@@ -45,9 +45,8 @@
                 emailCard.appendChild(fullName);
                 emailCard.appendChild(emailAddress);
                 emailCard.appendChild(emailSubject);
-                emailCard.appendChild(emailContent);
 
-                container.appendChild(emailCard);
+                sectionEmails.appendChild(emailCard);
             }
         });
     }
@@ -56,8 +55,12 @@
 
 <!-- MAIN -->
 <main>
-    <section class="section-emails">
-        <div class="container"></div>
-    </section>
+    <div class="container inbox-container">
+        <aside class="side-navigation">
+            <button id="inbox" class="btn-side-nav selected">Inbox</button>
+            <button id="tags" class="btn-side-nav">Tags</button>
+        </aside>
+        <section class="section-emails"></section>
+    </div>
 </main>
 {% endblock content %}
