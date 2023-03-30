@@ -18,39 +18,20 @@ db = client.instantInbox
 
 
 class User:
-    def create_account(self):
-
-        # Create the user object
-        user = {
-            '_id': uuid.uuid4().hex,
-            'firstName': request.get_json()['firstName'],
-            'lastName': request.get_json()['lastName'],
-            'email': request.get_json()['email'],
-            'password': request.get_json()['password'],
-            'confirmPassword': request.get_json()['confirmPassword']
+    def save_user_data(self, email_address):
+        user_data = {
+            'email': email_address,
+            'module_change': '',
+            'travel_leave': '',
+            'sick_leave': ''
         }
 
-        # Check for existing email address
-        if db.users.find_one({'email': user['email']}):
-            return jsonify({'message': 'Email already exists'})
+        # Check if user exists
+        existing_user = db.users.find_one({'email': email_address})
+        if existing_user:
+            user_data = existing_user
+        else:
+            # Insert new user with empty tags
+            db.users.insert_one(user_data)
 
-        # Inserting user in the database
-        db.users.insert_one(user)
-
-        # Return user with status code set to 200
-        return jsonify(user), 200
-
-    def login(self):
-
-        user = {
-            'email': request.get_json()['email'],
-            'password': request.get_json()['password']
-        }
-
-        retrieved_user = db.users.find_one({'password': user['password']})
-
-        # Check whether email address and password match
-        if retrieved_user:
-            return jsonify(retrieved_user), 200
-
-        return jsonify({'message': 'Your email/password is wrong!'})
+        return user_data
