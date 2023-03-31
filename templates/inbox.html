@@ -11,42 +11,73 @@
 
         messages.forEach((message) => {
             if (!message.isRead) {
-                const htmlContent = message.body.content;
+                const htmlString = message.body.content;
 
-                // Create a temporary DOM element
-                const tempElement = document.createElement('div');
+                function extractEmailContent(html) {
+                    const parser = new DOMParser();
+                    const parsedHtml = parser.parseFromString(
+                        html,
+                        'text/html'
+                    );
 
-                // Set the HTML content as the innerHTML of the temporary element
-                tempElement.innerHTML = htmlContent;
+                    // You can adjust the query selector to fit your specific needs
+                    const body = parsedHtml.querySelector('body');
+                    const lines = [];
 
-                // Extract the text content from the temporary element
-                const textContent =
-                    tempElement.textContent || tempElement.innerText;
+                    function traverseNodes(node) {
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            const text = node.textContent.trim();
+                            if (text) {
+                                lines.push(text);
+                            }
+                        } else if (node.childNodes.length) {
+                            node.childNodes.forEach(traverseNodes);
+                        }
+                    }
+
+                    traverseNodes(body);
+                    return lines.join('\n');
+                }
 
                 const sectionEmails = document.querySelector('.section-emails');
                 const container = document.querySelector('.container');
                 const emailCard = document.createElement('figure');
+                const emailHeader = document.createElement('header');
                 const emailAddress = document.createElement('p');
                 const fullName = document.createElement('p');
                 const emailSubject = document.createElement('p');
+                const emailContentContainer = document.createElement('div');
                 const emailContent = document.createElement('p');
 
-                emailContent.textContent = textContent;
+                emailContent.textContent = extractEmailContent(htmlString);
 
                 emailCard.classList.add('email-card');
+                emailHeader.classList.add('email-header');
                 emailAddress.classList.add('email-address');
                 fullName.classList.add('full-name');
                 emailSubject.classList.add('email-subject');
+                emailContentContainer.classList.add(
+                    'hidden',
+                    'email-content-container'
+                );
+                emailContent.classList.add('email-content');
 
                 emailAddress.textContent = message.from.emailAddress.address;
                 fullName.textContent = message.from.emailAddress.name;
                 emailSubject.textContent = message.subject;
 
-                emailCard.appendChild(fullName);
-                emailCard.appendChild(emailAddress);
-                emailCard.appendChild(emailSubject);
+                emailHeader.appendChild(fullName);
+                emailHeader.appendChild(emailAddress);
+                emailHeader.appendChild(emailSubject);
 
+                emailCard.appendChild(emailHeader);
+                emailContentContainer.appendChild(emailContent);
+                emailCard.appendChild(emailContentContainer);
                 sectionEmails.appendChild(emailCard);
+
+                emailCard.addEventListener('click', () => {
+                    emailContentContainer.classList.toggle('hidden');
+                });
             }
         });
     }
