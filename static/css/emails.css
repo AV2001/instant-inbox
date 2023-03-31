@@ -39,7 +39,7 @@
 /*************************/
 .section-emails {
     overflow-y: scroll;
-    min-height: 80vh;
+    max-height: 80vh;
 }
 
 .email-card {
