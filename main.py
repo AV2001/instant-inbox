@@ -123,6 +123,22 @@ def save_user_data():
     return jsonify(user_data)
 
 
+# Update the content of the tags
+@app.route('/update-tags', methods=['POST'])
+def update_tags():
+    email = request.form['email']
+    module_change = request.form['module_change']
+    travel_leave = request.form['travel_leave']
+    sick_leave = request.form['sick_leave']
+
+    result = User().update_tags(email, module_change, travel_leave, sick_leave)
+
+    if result:
+        return jsonify({'message': 'Tags updated successfully!'}), 200
+    else:
+        return jsonify({'message': 'Error updating tags!'}), 500
+
+
 @app.route('/.well-known/<path:path>')
 def serve_well_known(path):
     return send_from_directory('.well-known', path)
