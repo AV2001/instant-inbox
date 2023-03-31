@@ -88,11 +88,13 @@
         const sectionEmails = document.querySelector('.section-emails');
         const sectionTags = document.querySelector('.section-tags');
 
+        sectionTags.style.display = 'none';
+
         btnTag.addEventListener('click', () => {
             btnInbox.classList.toggle('selected');
             btnTag.classList.toggle('selected');
             sectionEmails.style.display = 'none';
-            sectionTags.style.display = 'block';
+            sectionTags.style.display = 'flex';
         });
 
         btnInbox.addEventListener('click', () => {
@@ -121,7 +123,46 @@
         <section class="section-emails"></section>
 
         <!-- TAGS SECTION -->
-        <section class="section-tags"></section>
+        <section class="section-tags">
+            <figure class="tag tag--module-change">
+                <div class="tag-heading-box">
+                    <p class="tag-heading">Module Change</p>
+                </div>
+                <div class="tag-content-box">
+                    <textarea
+                        name="module-change"
+                        id="module-change"
+                        rows="3"
+                    ></textarea>
+                </div>
+            </figure>
+            <figure class="tag tag--travel-leave">
+                <div class="tag-heading-box">
+                    <p class="tag-heading">Travel Leave</p>
+                </div>
+                <div class="tag-content-box">
+                    <textarea
+                        name="travel-leave"
+                        id="travel-leave"
+                        rows="3"
+                    ></textarea>
+                </div>
+            </figure>
+            <figure class="tag tag--sick-leave">
+                <div class="tag-heading-box">
+                    <p class="tag-heading">Sick Leave</p>
+                </div>
+                <div class="tag-content-box">
+                    <textarea
+                        name="sick-leave"
+                        id="sick-leave"
+                        rows="3"
+                    ></textarea>
+                </div>
+            </figure>
+
+            <button id="btn-save" class="btn btn--filled">Save</button>
+        </section>
     </div>
 </main>
 {% endblock content %}
