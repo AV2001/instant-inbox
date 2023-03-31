@@ -45,9 +45,6 @@
 .email-card {
     background-color: #eee;
     width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 2.4rem;
     padding: 2.4rem;
     border-radius: 12px;
     border-top-right-radius: 0;
@@ -59,6 +56,12 @@
 
 .email-card:hover {
     background-color: #ddd;
+}
+
+.email-header {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
 }
 
 .email-address {
@@ -74,4 +77,19 @@
 .email-subject {
     font-size: 1.6rem;
     font-weight: 400;
+    margin-left: auto;
+}
+
+.email-content-container {
+    padding: 3.2rem 0 0;
+    width: 100%;
+}
+
+.email-content {
+    font-size: 1.8rem;
+    line-height: 1.8;
+}
+
+.hidden {
+    display: none;
 }
