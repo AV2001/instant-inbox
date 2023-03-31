@@ -81,17 +81,47 @@
             }
         });
     }
-    window.onload = fetchInbox;
+
+    function switchView() {
+        const btnTag = document.getElementById('btn-tag');
+        const btnInbox = document.getElementById('btn-inbox');
+        const sectionEmails = document.querySelector('.section-emails');
+        const sectionTags = document.querySelector('.section-tags');
+
+        btnTag.addEventListener('click', () => {
+            btnInbox.classList.toggle('selected');
+            btnTag.classList.toggle('selected');
+            sectionEmails.style.display = 'none';
+            sectionTags.style.display = 'block';
+        });
+
+        btnInbox.addEventListener('click', () => {
+            btnInbox.classList.toggle('selected');
+            btnTag.classList.toggle('selected');
+            sectionTags.style.display = 'none';
+            sectionEmails.style.display = 'block';
+        });
+    }
+
+    window.onload = () => {
+        fetchInbox();
+        switchView();
+    };
 </script>
 
 <!-- MAIN -->
 <main>
     <div class="container inbox-container">
         <aside class="side-navigation">
-            <button id="inbox" class="btn-side-nav selected">Inbox</button>
-            <button id="tags" class="btn-side-nav">Tags</button>
+            <button id="btn-inbox" class="btn-side-nav selected">Inbox</button>
+            <button id="btn-tag" class="btn-side-nav">Tags</button>
         </aside>
+
+        <!-- EMAILS SECTION -->
         <section class="section-emails"></section>
+
+        <!-- TAGS SECTION -->
+        <section class="section-tags"></section>
     </div>
 </main>
 {% endblock content %}
