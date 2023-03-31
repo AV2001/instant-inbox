@@ -93,3 +93,57 @@
 .hidden {
     display: none;
 }
+
+/*************************/
+/* TAGS SECTION */
+/*************************/
+.section-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 4.8rem;
+}
+
+.tag-heading {
+    color: #333;
+    font-size: 2.4rem;
+    font-weight: 500;
+    margin-bottom: 2.4rem;
+}
+
+.tag--module-change .tag-content-box,
+.tag--module-change textarea {
+    background-color: #fff4e6;
+}
+
+.tag--travel-leave .tag-content-box,
+.tag--travel-leave textarea {
+    background-color: #edf2ff;
+}
+
+.tag--sick-leave .tag-content-box,
+.tag--sick-leave textarea {
+    background-color: #fff5f5;
+}
+
+.tag-content-box {
+    padding: 1.2rem;
+    min-height: 6.4rem;
+    width: 100%;
+    border-radius: 10px;
+}
+
+textarea {
+    border: none;
+    outline: none;
+    font-size: 1.8rem;
+    font-family: inherit;
+    line-height: 1.8;
+    width: 80%;
+    resize: none;
+    overflow: hidden;
+    min-height: 3.2rem;
+}
+
+#btn-save {
+    width: fit-content;
+}
