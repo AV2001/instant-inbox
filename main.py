@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, url_for, jsonify, send_from_directory
+from flask import Flask, request, redirect, render_template, session, url_for, jsonify,  send_from_directory, Response
 from msal import ConfidentialClientApplication
 from uuid import uuid4
 import secrets
@@ -126,17 +126,17 @@ def save_user_data():
 # Update the content of the tags
 @app.route('/update-tags', methods=['POST'])
 def update_tags():
-    email = request.json['email_address']
+    email_address = request.json['email_address']
     module_change = request.json['module_change']
     travel_leave = request.json['travel_leave']
     sick_leave = request.json['sick_leave']
 
-    result = User().update_tags(email, module_change, travel_leave, sick_leave)
+    result = User().update_tags(email_address, module_change, travel_leave, sick_leave)
 
     if result:
         return jsonify({'message': 'Tags updated successfully!'}), 200
     else:
-        return jsonify({'message': 'You did not change the tags!'}), 200
+        return Response(status=304)
 
 
 @app.route('/.well-known/<path:path>')
