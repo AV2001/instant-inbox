@@ -3,6 +3,28 @@
 <script>
     sessionStorage.setItem('access_token', '{{access_token}}');
 
+    const btnLogout = document.createElement('button');
+    btnLogout.textContent = 'Logout';
+    btnLogout.classList.add('btn', 'btn--filled');
+
+    const mainNavList = document.querySelector('.main-nav-list');
+    const mainNavLinks = document.querySelectorAll('.main-nav-link');
+
+    // Remove the outlook login button after login
+    document.getElementById('btn-outlook-login').remove();
+
+    // Displays the logout button after loggin in
+    mainNavList.appendChild(btnLogout);
+
+    mainNavLinks.forEach((link) => {
+        link.remove();
+    });
+
+    btnLogout.addEventListener('click', () => {
+        sessionStorage.clear();
+        window.location.href = '/';
+    });
+
     async function fetchInbox() {
         const response = await fetch('/fetch-emails');
         const data = await response.json();
@@ -25,8 +47,6 @@
                 const emailContentContainer = document.createElement('div');
                 const emailContent = document.createElement('p');
 
-                emailContent.textContent = message.body.content;
-
                 emailCard.classList.add('email-card');
                 emailHeader.classList.add('email-header');
                 emailAddress.classList.add('email-address');
@@ -36,11 +56,14 @@
                     'hidden',
                     'email-content-container'
                 );
+
+                // Email content
+                emailContent.textContent = message.body.content;
                 emailContent.classList.add('email-content');
 
                 emailAddress.textContent = message.from.emailAddress.address;
                 fullName.textContent = message.from.emailAddress.name;
-                emailSubject.textContent = message.subject;
+                emailSubject.textContent = message.subject.slice(0, 20);
 
                 emailHeader.appendChild(fullName);
                 emailHeader.appendChild(emailAddress);
@@ -82,11 +105,20 @@
                 emailCard.appendChild(emailContentContainer);
                 sectionEmails.appendChild(emailCard);
 
-                emailCard.addEventListener('click', () => {
-                    emailContentContainer.classList.toggle('hidden');
+                emailCard.addEventListener('click', (event) => {
+                    if (event.target.className !== 'tag-content') {
+                        emailContentContainer.classList.toggle('hidden');
+                    }
                 });
             }
         });
+    }
+
+    function clearEmails() {
+        const sectionEmails = document.querySelector('.section-emails');
+        while (sectionEmails.firstChild) {
+            sectionEmails.removeChild(sectionEmails.firstChild);
+        }
     }
 
     function switchView() {
@@ -188,7 +220,11 @@
                 title: 'Email sent!',
                 text: 'Email sent successfully!',
                 icon: 'success',
+            }).then(() => {
+                clearEmails();
+                fetchInbox();
             });
+
             try {
                 await markEmailAsRead(messageId);
             } catch (error) {
@@ -209,7 +245,7 @@
 
     async function markEmailAsRead(messageId) {
         const accessToken = getAccessTokenFromCookie();
-        console.log(accessToken);
+
         const headers = new Headers({
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
@@ -244,7 +280,13 @@
 <main>
     <div class="container inbox-container">
         <aside class="side-navigation">
-            <button id="btn-inbox" class="btn-side-nav selected">Inbox</button>
+            <button
+                id="btn-inbox"
+                class="btn-side-nav selected"
+                onclick="window.location.reload()"
+            >
+                Inbox
+            </button>
             <button id="btn-tag" class="btn-side-nav">Tags</button>
         </aside>
 
