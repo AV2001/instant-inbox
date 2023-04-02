@@ -46,6 +46,34 @@
 
                 emailCard.appendChild(emailHeader);
                 emailContentContainer.appendChild(emailContent);
+
+                if (message['tag_content'].length > 0) {
+                    const tagContentResponseContainer =
+                        document.createElement('div');
+                    const tagContent = document.createElement('textarea');
+                    tagContent.value = message['tag_content'];
+                    tagContent.classList.add('tag-content');
+
+                    tagContentResponseContainer.appendChild(tagContent);
+
+                    const sendResponseBtn = document.createElement('button');
+                    sendResponseBtn.textContent = 'Send Response';
+                    sendResponseBtn.id = 'btn-send-response';
+                    sendResponseBtn.classList.add('btn', 'btn--filled');
+                    tagContentResponseContainer.appendChild(sendResponseBtn);
+                    emailContentContainer.appendChild(
+                        tagContentResponseContainer
+                    );
+
+                    // Add the event listener for calling the sendResponsene function
+                    sendResponseBtn.addEventListener('click', () => {
+                        const recipient = message.from.emailAddress.address;
+                        const subject = `RE: ${message.subject}`;
+                        const content = tagContent.value;
+                        sendResponse(recipient, subject, content);
+                    });
+                }
+
                 emailCard.appendChild(emailContentContainer);
                 sectionEmails.appendChild(emailCard);
 
@@ -132,6 +160,34 @@
             swal({
                 title: 'Error!',
                 text: 'An unexpected error occurred. Please try again.',
+                icon: 'error',
+            });
+        }
+    }
+
+    async function sendResponse(toAddress, subject, tagContent) {
+        const response = await fetch('/send-response', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                to_address: toAddress,
+                subject: subject,
+                tag_content: tagContent,
+            }),
+        });
+
+        if (response.status === 200) {
+            swal({
+                title: 'Email sent!',
+                text: 'Email sent successfully!',
+                icon: 'success',
+            });
+        } else {
+            swal({
+                title: 'Error!',
+                text: 'An unexpected error occurred. Please try again,',
                 icon: 'error',
             });
         }
