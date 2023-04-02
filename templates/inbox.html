@@ -1,6 +1,8 @@
 {% extends 'base.html' %} {% block content %}
 
 <script>
+    sessionStorage.setItem('access_token', '{{access_token}}');
+
     async function fetchInbox() {
         const response = await fetch('/fetch-emails');
         const data = await response.json();
@@ -59,6 +61,7 @@
                     const sendResponseBtn = document.createElement('button');
                     sendResponseBtn.textContent = 'Send Response';
                     sendResponseBtn.id = 'btn-send-response';
+                    sendResponseBtn.setAttribute('data-message-id', message.id);
                     sendResponseBtn.classList.add('btn', 'btn--filled');
                     tagContentResponseContainer.appendChild(sendResponseBtn);
                     emailContentContainer.appendChild(
@@ -70,7 +73,9 @@
                         const recipient = message.from.emailAddress.address;
                         const subject = `RE: ${message.subject}`;
                         const content = tagContent.value;
-                        sendResponse(recipient, subject, content);
+                        const messageId =
+                            sendResponseBtn.getAttribute('data-message-id');
+                        sendResponse(recipient, subject, content, messageId);
                     });
                 }
 
@@ -165,7 +170,7 @@
         }
     }
 
-    async function sendResponse(toAddress, subject, tagContent) {
+    async function sendResponse(toAddress, subject, tagContent, messageId) {
         const response = await fetch('/send-response', {
             method: 'POST',
             headers: {
@@ -184,12 +189,45 @@
                 text: 'Email sent successfully!',
                 icon: 'success',
             });
+            try {
+                await markEmailAsRead(messageId);
+            } catch (error) {
+                console.error('Error marking email as read:', error);
+            }
         } else {
             swal({
                 title: 'Error!',
                 text: 'An unexpected error occurred. Please try again,',
                 icon: 'error',
             });
+        }
+    }
+
+    function getAccessTokenFromCookie() {
+        return sessionStorage.getItem('access_token');
+    }
+
+    async function markEmailAsRead(messageId) {
+        const accessToken = getAccessTokenFromCookie();
+        console.log(accessToken);
+        const headers = new Headers({
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        });
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: headers,
+            body: JSON.stringify({ isRead: true }),
+        };
+
+        const response = await fetch(
+            `https://graph.microsoft.com/v1.0/me/messages/${messageId}`,
+            requestOptions
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
         }
     }
 
