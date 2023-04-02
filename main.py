@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 
 from models import User
+from algorithm import predict_tag
 
 
 load_dotenv()
@@ -23,7 +24,7 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 
 AUTHORITY = 'https://login.microsoftonline.com/common'
-SCOPES = ['User.Read', 'Mail.Read']
+SCOPES = ['User.Read', 'Mail.Read', 'Mail.Send', 'Mail.ReadWrite']
 REDIRECT_URI = 'http://localhost:5000/callback'
 BASE_URL = 'https://graph.microsoft.com/v1.0/me/'
 
@@ -43,7 +44,8 @@ def about():
 # Renders inbox.html
 @app.route('/inbox')
 def inbox():
-    return render_template('inbox.html', title='Inbox')
+    access_token = session.get('access_token')
+    return render_template('inbox.html', title='Inbox', access_token=access_token)
 
 
 # Outlook authentication
@@ -122,6 +124,12 @@ def fetch_emails():
             cleaned_text = soup.get_text()
             message['body']['content'] = cleaned_text
 
+            # Add predicted tags and corresponding tag content to each message
+            predicted_tag = predict_tag(cleaned_text)
+            tag_content = User().get_tag_content(email_address, predicted_tag)
+            message['predicted_tag'] = predicted_tag
+            message['tag_content'] = tag_content
+
             cleaned_messages.append(message)
 
         return jsonify(email_address=email_address, messages=cleaned_messages)
@@ -153,6 +161,45 @@ def update_tags():
         return jsonify({'message': 'Tags updated successfully!'}), 200
     else:
         return Response(status=304)
+
+
+def send_email(access_token, to_address, subject, content):
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    body = {
+        'message': {
+            'subject': subject,
+            'body': {
+                'contentType': 'HTML',
+                'content': content
+            },
+            'toRecipients': [
+                {
+                    'emailAddress': {
+                        'address': to_address
+                    }
+                }
+            ]
+        }
+    }
+    response = requests.post(f'{BASE_URL}sendMail', headers=headers, json=body)
+    response.raise_for_status()
+
+
+@app.route('/send-response', methods=['POST'])
+def send_response():
+    try:
+        to_address = request.json['to_address']
+        tag_content = request.json['tag_content']
+        subject = request.json['subject']
+
+        send_email(session['access_token'], to_address, subject, tag_content)
+        return jsonify({'message': 'Email sent successfully!'}), 200
+    except Exception as e:
+        print(f'Error: {e}')
+        return jsonify(error=str(e)), 500
 
 
 @app.route('/.well-known/<path:path>')
