@@ -48,3 +48,11 @@ class User:
         )
 
         return result.modified_count > 0
+
+    def get_tag_content(self, email_address, predicted_tag):
+        user = db.users.find_one({'email_address': email_address})
+        if user:
+            tag_content = user.get(predicted_tag, '')
+            return tag_content
+        else:
+            return ''
