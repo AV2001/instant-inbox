@@ -18,7 +18,7 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
 
-# Get the valkues from the .env file
+# Get the values from heroku
 APPLICATION_ID = os.getenv('APPLICATION_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
@@ -36,7 +36,7 @@ def home():
 
 
 # Renders about.html
-@app.route('/about/')
+@app.route('/about')
 def about():
     return render_template('about.html', title='About')
 
