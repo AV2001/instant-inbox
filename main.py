@@ -5,6 +5,7 @@ import secrets
 import requests
 from dotenv import load_dotenv
 import os
+from bs4 import BeautifulSoup
 
 
 from models import User
@@ -108,7 +109,22 @@ def fetch_emails():
 
         messages_data = messages_response.json().get('value', [])
 
-        return jsonify(email_address=email_address, messages=messages_data)
+        cleaned_messages = []
+
+        for message in messages_data:
+            html_content = message['body']['content']
+            soup = BeautifulSoup(html_content, 'html.parser')
+
+            # Remove all script and style elements
+            for script in soup(['script', 'style']):
+                script.extract()
+
+            cleaned_text = soup.get_text()
+            message['body']['content'] = cleaned_text
+
+            cleaned_messages.append(message)
+
+        return jsonify(email_address=email_address, messages=cleaned_messages)
 
     except Exception as e:
         print(f"Error: {e}")
