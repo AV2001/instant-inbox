@@ -13,34 +13,6 @@
 
         messages.forEach((message) => {
             if (!message.isRead) {
-                const htmlString = message.body.content;
-
-                function extractEmailContent(html) {
-                    const parser = new DOMParser();
-                    const parsedHtml = parser.parseFromString(
-                        html,
-                        'text/html'
-                    );
-
-                    // You can adjust the query selector to fit your specific needs
-                    const body = parsedHtml.querySelector('body');
-                    const lines = [];
-
-                    function traverseNodes(node) {
-                        if (node.nodeType === Node.TEXT_NODE) {
-                            const text = node.textContent.trim();
-                            if (text) {
-                                lines.push(text);
-                            }
-                        } else if (node.childNodes.length) {
-                            node.childNodes.forEach(traverseNodes);
-                        }
-                    }
-
-                    traverseNodes(body);
-                    return lines.join('\n');
-                }
-
                 const sectionEmails = document.querySelector('.section-emails');
                 const container = document.querySelector('.container');
                 const emailCard = document.createElement('figure');
@@ -51,7 +23,7 @@
                 const emailContentContainer = document.createElement('div');
                 const emailContent = document.createElement('p');
 
-                emailContent.textContent = extractEmailContent(htmlString);
+                emailContent.textContent = message.body.content;
 
                 emailCard.classList.add('email-card');
                 emailHeader.classList.add('email-header');
