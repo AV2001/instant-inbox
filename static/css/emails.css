@@ -90,6 +90,15 @@
     line-height: 1.8;
 }
 
+.tag-content {
+    margin-top: 3.2rem;
+    margin-bottom: 1.6rem;
+}
+
+#btn-send-response {
+    width: fit-content;
+}
+
 .hidden {
     display: none;
 }
@@ -126,9 +135,7 @@
 }
 
 .tag-content-box {
-    padding: 1.2rem;
     min-height: 6.4rem;
-    width: 100%;
     border-radius: 10px;
 }
 
@@ -141,7 +148,8 @@ textarea {
     width: 100%;
     resize: none;
     overflow-y: scroll;
-    min-height: 3.2rem;
+    padding: 1.2rem;
+    border-radius: 10px;
 }
 
 #btn-save {
