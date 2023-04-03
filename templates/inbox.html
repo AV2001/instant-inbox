@@ -35,83 +35,103 @@
         // Store the email address in local/session storage
         sessionStorage.setItem('email_address', email_address);
 
-        messages.forEach((message) => {
-            if (!message.isRead) {
-                const sectionEmails = document.querySelector('.section-emails');
-                const container = document.querySelector('.container');
-                const emailCard = document.createElement('figure');
-                const emailHeader = document.createElement('header');
-                const emailAddress = document.createElement('p');
-                const fullName = document.createElement('p');
-                const emailSubject = document.createElement('p');
-                const emailContentContainer = document.createElement('div');
-                const emailContent = document.createElement('p');
+        const sectionEmails = document.querySelector('.section-emails');
 
-                emailCard.classList.add('email-card');
-                emailHeader.classList.add('email-header');
-                emailAddress.classList.add('email-address');
-                fullName.classList.add('full-name');
-                emailSubject.classList.add('email-subject');
-                emailContentContainer.classList.add(
-                    'hidden',
-                    'email-content-container'
-                );
+        if (messages.length > 0) {
+            messages.forEach((message) => {
+                if (!message.isRead) {
+                    const container = document.querySelector('.container');
+                    const emailCard = document.createElement('figure');
+                    const emailHeader = document.createElement('header');
+                    const emailAddress = document.createElement('p');
+                    const fullName = document.createElement('p');
+                    const emailSubject = document.createElement('p');
+                    const emailContentContainer = document.createElement('div');
+                    const emailContent = document.createElement('p');
 
-                // Email content
-                emailContent.textContent = message.body.content;
-                emailContent.classList.add('email-content');
-
-                emailAddress.textContent = message.from.emailAddress.address;
-                fullName.textContent = message.from.emailAddress.name;
-                emailSubject.textContent = message.subject.slice(0, 20);
-
-                emailHeader.appendChild(fullName);
-                emailHeader.appendChild(emailAddress);
-                emailHeader.appendChild(emailSubject);
-
-                emailCard.appendChild(emailHeader);
-                emailContentContainer.appendChild(emailContent);
-
-                if (message['tag_content'].length > 0) {
-                    const tagContentResponseContainer =
-                        document.createElement('div');
-                    const tagContent = document.createElement('textarea');
-                    tagContent.value = message['tag_content'];
-                    tagContent.classList.add('tag-content');
-
-                    tagContentResponseContainer.appendChild(tagContent);
-
-                    const sendResponseBtn = document.createElement('button');
-                    sendResponseBtn.textContent = 'Send Response';
-                    sendResponseBtn.id = 'btn-send-response';
-                    sendResponseBtn.setAttribute('data-message-id', message.id);
-                    sendResponseBtn.classList.add('btn', 'btn--filled');
-                    tagContentResponseContainer.appendChild(sendResponseBtn);
-                    emailContentContainer.appendChild(
-                        tagContentResponseContainer
+                    emailCard.classList.add('email-card');
+                    emailHeader.classList.add('email-header');
+                    emailAddress.classList.add('email-address');
+                    fullName.classList.add('full-name');
+                    emailSubject.classList.add('email-subject');
+                    emailContentContainer.classList.add(
+                        'hidden',
+                        'email-content-container'
                     );
 
-                    // Add the event listener for calling the sendResponsene function
-                    sendResponseBtn.addEventListener('click', () => {
-                        const recipient = message.from.emailAddress.address;
-                        const subject = `RE: ${message.subject}`;
-                        const content = tagContent.value;
-                        const messageId =
-                            sendResponseBtn.getAttribute('data-message-id');
-                        sendResponse(recipient, subject, content, messageId);
+                    // Email content
+                    emailContent.textContent = message.body.content;
+                    emailContent.classList.add('email-content');
+
+                    emailAddress.textContent =
+                        message.from.emailAddress.address;
+                    fullName.textContent = message.from.emailAddress.name;
+                    emailSubject.textContent = message.subject.slice(0, 20);
+
+                    emailHeader.appendChild(fullName);
+                    emailHeader.appendChild(emailAddress);
+                    emailHeader.appendChild(emailSubject);
+
+                    emailCard.appendChild(emailHeader);
+                    emailContentContainer.appendChild(emailContent);
+
+                    if (message['tag_content'].length > 0) {
+                        const tagContentResponseContainer =
+                            document.createElement('div');
+                        const tagContent = document.createElement('textarea');
+                        tagContent.value = message['tag_content'];
+                        tagContent.classList.add('tag-content');
+
+                        tagContentResponseContainer.appendChild(tagContent);
+
+                        const sendResponseBtn =
+                            document.createElement('button');
+                        sendResponseBtn.textContent = 'Send Response';
+                        sendResponseBtn.id = 'btn-send-response';
+                        sendResponseBtn.setAttribute(
+                            'data-message-id',
+                            message.id
+                        );
+                        sendResponseBtn.classList.add('btn', 'btn--filled');
+                        tagContentResponseContainer.appendChild(
+                            sendResponseBtn
+                        );
+                        emailContentContainer.appendChild(
+                            tagContentResponseContainer
+                        );
+
+                        // Add the event listener for calling the sendResponsene function
+                        sendResponseBtn.addEventListener('click', () => {
+                            const recipient = message.from.emailAddress.address;
+                            const subject = `RE: ${message.subject}`;
+                            const content = tagContent.value;
+                            const messageId =
+                                sendResponseBtn.getAttribute('data-message-id');
+                            sendResponse(
+                                recipient,
+                                subject,
+                                content,
+                                messageId
+                            );
+                        });
+                    }
+
+                    emailCard.appendChild(emailContentContainer);
+                    sectionEmails.appendChild(emailCard);
+
+                    emailCard.addEventListener('click', (event) => {
+                        if (event.target.className !== 'tag-content') {
+                            emailContentContainer.classList.toggle('hidden');
+                        }
                     });
                 }
-
-                emailCard.appendChild(emailContentContainer);
-                sectionEmails.appendChild(emailCard);
-
-                emailCard.addEventListener('click', (event) => {
-                    if (event.target.className !== 'tag-content') {
-                        emailContentContainer.classList.toggle('hidden');
-                    }
-                });
-            }
-        });
+            });
+        } else {
+            const h2El = document.createElement('h1');
+            h2El.classList.add('heading-secondary');
+            h2El.textContent = 'There are no emails in your inbox.';
+            sectionEmails.appendChild(h2El);
+        }
     }
 
     function clearEmails() {
