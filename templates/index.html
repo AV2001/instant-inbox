@@ -1,114 +1,118 @@
 {% extends 'base.html' %} {% block content %}
 <!-- MAIN -->
 <main>
-  <!-- HERO SECTION -->
-  <section class="section-hero">
-    <div class="container">
-      <div class="hero-container">
-        <div class="hero-content-box">
-          <h1 class="heading-primary">
-            Teachers, your time is well spent on teaching
-          </h1>
-          <p class="hero-text">
-            A smart email management application that is powered by Artificial
-            Intelligence to help you automate the process of responding to
-            emails with our easy-to-use interface.
-          </p>
-          <button
-            class="btn btn--filled"
-            onclick="window.location.href='/login'"
-          >
-            Start here
-          </button>
+    <!-- HERO SECTION -->
+    <section class="section-hero">
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content-box">
+                    <h1 class="heading-primary">
+                        Teachers, your time is well spent on teaching
+                    </h1>
+                    <p class="hero-text">
+                        A smart email management application that is powered by
+                        Artificial Intelligence to help you automate the process
+                        of responding to emails with our easy-to-use interface.
+                    </p>
+                    <button
+                        class="btn btn--filled"
+                        onclick="window.location.href='/login'"
+                    >
+                        Start here
+                    </button>
+                </div>
+                <div class="hero-img-box">
+                    <img
+                        src="{{ url_for('static', filename='./images/teacher.png') }}"
+                        alt="Animated image of a teacher sitting in front of a compute and writing an email"
+                        class="hero-img"
+                    />
+                </div>
+            </div>
         </div>
-        <div class="hero-img-box">
-          <img
-            src="{{ url_for('static', filename='./images/teacher.png') }}"
-            alt="Animated image of a teacher sitting in front of a compute and writing an email"
-            class="hero-img"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FEATURES SECTION -->
-  <section class="section-features">
-    <div class="container">
-      <p class="sub-heading">Features</p>
-      <h2 class="heading-secondary">Why Instant Inbox?</h2>
+    <!-- FEATURES SECTION -->
+    <section class="section-features">
+        <div class="container">
+            <p class="sub-heading">Features</p>
+            <h2 class="heading-secondary">Why Instant Inbox?</h2>
 
-      <div class="features">
-        <!-- FEATURE 1 -->
-        <div class="feature-img-box">
-          <img
-            src="{{url_for('static', filename='./images/feature-image-1.png')}}"
-            alt=""
-            class="feature-img"
-          />
-        </div>
-        <div class="feature-box">
-          <p class="feature-heading">Preview Tags</p>
-          <p class="feature-text">
-            Our Machine Learning algorithm goes through the email's content and
-            classifies them based on a tag.
-          </p>
-        </div>
+            <div class="features">
+                <!-- FEATURE 1 -->
+                <div class="feature-img-box">
+                    <img
+                        src="{{url_for('static', filename='./images/feature-image-1.png')}}"
+                        alt=""
+                        class="feature-img"
+                    />
+                </div>
+                <div class="feature-box">
+                    <p class="feature-heading">Preview Tags</p>
+                    <p class="feature-text">
+                        Our Machine Learning algorithm goes through the email's
+                        content and classifies them based on a tag.
+                    </p>
+                </div>
 
-        <!-- FEATURE 2 -->
-        <div class="feature-box">
-          <p class="feature-heading">Send Response</p>
-          <p class="feature-text">
-            You can select the tag's associated box to write the content that
-            you would like to send out as the email.
-          </p>
-        </div>
-        <div class="feature-img-box">
-          <img
-            src="{{url_for('static', filename='./images/feature-image-2.png')}}"
-            alt="A hand-sketched image of pencil writing on a sticky note"
-            class="feature-img"
-          />
-        </div>
+                <!-- FEATURE 2 -->
+                <div class="feature-box">
+                    <p class="feature-heading">Send Response</p>
+                    <p class="feature-text">
+                        You can select the tag's associated box to write the
+                        content that you would like to send out as the email.
+                    </p>
+                </div>
+                <div class="feature-img-box">
+                    <img
+                        src="{{url_for('static', filename='./images/feature-image-2.png')}}"
+                        alt="A hand-sketched image of pencil writing on a sticky note"
+                        class="feature-img"
+                    />
+                </div>
 
-        <!-- FEATURE 3 -->
-        <div class="feature-img-box">
-          <img
-            src="{{url_for('static', filename='./images/feature-image-3.png')}}"
-            alt=""
-            class="feature-img"
-          />
+                <!-- FEATURE 3 -->
+                <div class="feature-img-box">
+                    <img
+                        src="{{url_for('static', filename='./images/feature-image-3.png')}}"
+                        alt=""
+                        class="feature-img"
+                    />
+                </div>
+                <div class="feature-box">
+                    <p class="feature-heading">Receive Feedback</p>
+                    <p class="feature-text">
+                        If the student is not satisfied with the response you
+                        wrote, you can always write a personalized one.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="feature-box">
-          <p class="feature-heading">Receive Feedback</p>
-          <p class="feature-text">
-            If the student is not satisfied with the response you wrote, you can
-            always write a personalized one.
-          </p>
+    </section>
+
+    <!-- USAGE SECTION -->
+    <section class="section-usage">
+        <div class="container">
+            <p class="sub-heading">Usage</p>
+            <h2 class="heading-secondary">How does all this work?</h2>
+            <video src="" class="demo-video"></video>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- USAGE SECTION -->
-  <section class="section-usage">
-    <div class="container">
-        <p class="sub-heading">Usage</p>
-      <h2 class="heading-secondary">How does all this work?</h2>
-    </div>
-  </section>
-
-  <!-- CTA SECTION -->
-  <section class="section-cta">
-    <div class="container cta--container">
-      <h2 class="heading-secondary cta--heading">
-        Don't waste your precious time communicating back and forth when you
-        could spend time teaching
-      </h2>
-      <button class="btn btn--cta" onclick="window.location.href='/login'">
-        Get started today
-      </button>
-    </div>
-  </section>
+    <!-- CTA SECTION -->
+    <section class="section-cta">
+        <div class="container cta--container">
+            <h2 class="heading-secondary cta--heading">
+                Don't waste your precious time communicating back and forth when
+                you could spend time teaching
+            </h2>
+            <button
+                class="btn btn--cta"
+                onclick="window.location.href='/login'"
+            >
+                Get started today
+            </button>
+        </div>
+    </section>
 </main>
 {% endblock content %}
